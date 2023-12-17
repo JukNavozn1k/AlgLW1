@@ -18,6 +18,19 @@ def generate_oriented_graph(num_nodes, num_edges):
             graph.add_edge(node1, node2)
             edges_added += 1
 
+
+    # костыль для петей и рёбер
+    if num_nodes > 1:
+        # кратные рёбра
+        while True:
+            node_a = random.randint(1, num_nodes)
+            node_b = random.randint(1, num_nodes)
+            if node_a != node_b: break
+        graph.add_edge(node_a, node_b)
+        graph.add_edge(node_b, node_a)
+        # петля
+        node_with_loop = random.randint(1, num_nodes)
+        graph.add_edge(node_with_loop, node_with_loop)
     return graph
 
 
@@ -28,7 +41,7 @@ generated_graph = generate_oriented_graph(num_nodes, num_edges)
 
 plt.figure(figsize=(8, 6))
 pos = nx.spring_layout(generated_graph)  
-plt.title("Слуайный ориентированный граф")
+plt.title("Слуайный ориентированный граф c  1 петлёй и кратной связью")
 nx.draw(generated_graph, pos, with_labels=True, node_size=500, node_color='skyblue', font_weight='bold', arrows=True)
 
 plt.show()
